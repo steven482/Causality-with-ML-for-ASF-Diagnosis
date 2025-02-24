@@ -1,0 +1,78 @@
+from IPython.display import display
+import pandas as pd
+import os
+
+
+# Creating a structured classification of ASF data in CSV format
+data = {
+    "Category": [
+        "Clinical Aspect", "Clinical Aspect", "Clinical Aspect", "Clinical Aspect", "Clinical Aspect",
+        "Clinical Aspect", "Clinical Aspect", "Clinical Aspect", "Clinical Aspect", "Clinical Aspect",
+        "Clinical Aspect", "Clinical Aspect", "Clinical Aspect", "Biological Aspect", "Biological Aspect",
+        "Biological Aspect", "Biological Aspect", "Biological Aspect", "Biological Aspect", "Biological Aspect",
+        "Biological Aspect", "Biological Aspect", "Biological Aspect", "Biological Aspect", "Biological Aspect",
+        "Biological Aspect", "Epidemiological Aspect", "Epidemiological Aspect", "Epidemiological Aspect",
+        "Epidemiological Aspect", "Epidemiological Aspect", "Epidemiological Aspect"
+    ],
+    "Aspect": [
+        "Incubation Period", "Fever", "Appetite", "Lethargy", "Skin Lesions", "Respiratory Problems",
+        "Digestive Symptoms", "Hemorrhages", "Mortality rate", "Nervous Symptoms", "Cyanosis",
+        "Joint Swelling", "Subacute/Chronic Infections", "Susceptibility", "Transmission",
+        "Clinical Signs", "Mortality Rate", "Role in Epidemiology", "Persistence of the Virus",
+        "Control Measures", "Control Challenges", "Surveillance Methods", "Impact of Human Activities",
+        "Endemic Regions", "Response to Infection", "Challenges in Containment", "Outbreak Patterns",
+        "Risk Factors", "Spread Mechanism", "Environmental Influence", "Host Factors", "Preventive Measures"
+    ],
+    "Wild Boar": [
+        "5-15 days", "High fever: 40.5-42 °C", "Loss of appetite", "Severe lethargy",
+        "Redness, especially on ears, muzzle, and legs", "Difficult breathing", "Diarrhea (sometimes bloody), vomiting",
+        "Hemorrhages in internal organs", "Nearly 100%", "Tremor, convulsions",
+        "Blue-purple discoloration of the skin", "Occasional", "Rare, usually leads to death",
+        "High", "Direct contact, environmental contamination", "Like domestic pigs, but less noticeable",
+        "Nearly 100%", "Significant role in maintenance and spread", "Longer persistence in environment and carcasses",
+        "Hunting bans, population control, fencing", "Difficult to control in wild populations",
+        "Surveillance through hunting and field observations", "Moderate to high (due to hunting, land use changes)",
+        "Endemic in some regions, especially in dense forests", "Challenges in containment due to mobility",
+        "Difficult due to mobility", "Seasonal", "Wildlife interaction, human activities",
+        "Direct contact, contaminated food", "Environmental persistence of virus", "Genetic susceptibility",
+        "Wildlife surveillance, habitat management"
+    ],
+    "Domestic Pigs": [
+        "4-19 days", "High fever: 40.5-42 °C", "Loss of appetite", "Severe lethargy",
+        "Redness, especially on ears, muzzle, and legs", "Difficult breathing", "Diarrhea (sometimes bloody), vomiting",
+        "Hemorrhages in internal organs", "Nearly 100%", "Tremor, convulsions",
+        "Blue-purple discoloration of the skin", "Occasional", "Rare, usually leads to death",
+        "High", "Direct contact, contaminated feed, fomites", "High fever, loss of appetite, bleeding",
+        "Nearly 100%", "Main cause of outbreaks on commercial farms", "Limited persistence in the environment",
+        "Biosecurity, culling, movement restrictions", "Rapid spread in densely populated farms",
+        "Regular testing, monitoring of symptoms", "High (due to agricultural practices)",
+        "Sporadic, depending on outbreak control success", "Immediate culling and containment",
+        "Requires rapid containment", "Seasonal outbreaks", "Farming intensity, trade movement",
+        "Animal transport, contaminated feed", "Limited persistence", "Genetic resistance in some breeds",
+        "Strict biosecurity, vaccination research"
+    ]
+}
+
+# Convert data dictionary to a DataFrame
+df = pd.DataFrame(data)
+
+# Save as CSV file
+csv_filename = "/mnt/data/ASF_Data_Classification.csv"
+df.to_csv(csv_filename, index=False)
+
+# Save the DataFrame to a CSV file
+#df.to_csv(file_path, index=False)
+#print(f"File saved at: {file_path}")
+
+# Define the directory and file path
+directory = "C:/mnt/data"
+file_path = os.path.join(directory, "ASF_Data_Classification.csv")
+
+# Display the CSV file to the user
+#import ace_tools as tools
+#tools.display_dataframe_to_user(name="ASF Data Classification", dataframe=df)
+
+# Provide the download link
+csv_filename
+# Display the DataFrame
+display(df) 
