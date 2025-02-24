@@ -1,0 +1,36 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the ASF Transmission Control dataset
+file_path = "ASF_Transmission_Control.csv"  # Update path as necessary
+df_transmission_control = pd.read_csv(file_path)
+
+# Display DataFrame to verify structure
+print("ASF Transmission and Control Dataset:")
+print(df_transmission_control.head())
+
+# Compute summary statistics
+summary_stats = df_transmission_control.describe()
+
+# Compute correlation matrix
+correlation_matrix_control = df_transmission_control.corr()
+
+# Save summary statistics and correlation matrix as CSV
+summary_stats.to_csv("Summary_Statistics_of_ASF_Control_Measures.csv", index=True)
+correlation_matrix_control.to_csv("Correlation_Matrix_of_ASF_Control_Measures.csv", index=True)
+
+# Print summary statistics
+print("\nSummary Statistics of ASF Control Measures:")
+print(summary_stats)
+
+# Print correlation matrix
+print("\nCorrelation Matrix of ASF Control Measures:")
+print(correlation_matrix_control)
+
+# Plot correlation heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix_control, annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
+plt.title("Correlation Between ASF Control Measures and Transmission Rate")
+plt.show()
