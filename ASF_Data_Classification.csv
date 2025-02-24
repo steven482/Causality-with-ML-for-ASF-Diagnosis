@@ -1,0 +1,33 @@
+Category,Aspect,Wild Boar,Domestic Pigs
+Clinical Aspect,Incubation Period,5-15 days,4-19 days
+Clinical Aspect,Fever,High fever: 40.5-42 °C,High fever: 40.5-42 °C
+Clinical Aspect,Appetite,Loss of appetite,Loss of appetite
+Clinical Aspect,Lethargy,Severe lethargy,Severe lethargy
+Clinical Aspect,Skin Lesions,"Redness, especially on ears, muzzle, and legs","Redness, especially on ears, muzzle, and legs"
+Clinical Aspect,Respiratory Problems,Difficult breathing,Difficult breathing
+Clinical Aspect,Digestive Symptoms,"Diarrhea (sometimes bloody), vomiting","Diarrhea (sometimes bloody), vomiting"
+Clinical Aspect,Hemorrhages,Hemorrhages in internal organs,Hemorrhages in internal organs
+Clinical Aspect,Mortality rate,Nearly 100%,Nearly 100%
+Clinical Aspect,Nervous Symptoms,"Tremor, convulsions","Tremor, convulsions"
+Clinical Aspect,Cyanosis,Blue-purple discoloration of the skin,Blue-purple discoloration of the skin
+Clinical Aspect,Joint Swelling,Occasional,Occasional
+Clinical Aspect,Subacute/Chronic Infections,"Rare, usually leads to death","Rare, usually leads to death"
+Biological Aspect,Susceptibility,High,High
+Biological Aspect,Transmission,"Direct contact, environmental contamination","Direct contact, contaminated feed, fomites"
+Biological Aspect,Clinical Signs,"Like domestic pigs, but less noticeable","High fever, loss of appetite, bleeding"
+Biological Aspect,Mortality Rate,Nearly 100%,Nearly 100%
+Biological Aspect,Role in Epidemiology,Significant role in maintenance and spread,Main cause of outbreaks on commercial farms
+Biological Aspect,Persistence of the Virus,Longer persistence in environment and carcasses,Limited persistence in the environment
+Biological Aspect,Control Measures,"Hunting bans, population control, fencing","Biosecurity, culling, movement restrictions"
+Biological Aspect,Control Challenges,Difficult to control in wild populations,Rapid spread in densely populated farms
+Biological Aspect,Surveillance Methods,Surveillance through hunting and field observations,"Regular testing, monitoring of symptoms"
+Biological Aspect,Impact of Human Activities,"Moderate to high (due to hunting, land use changes)",High (due to agricultural practices)
+Biological Aspect,Endemic Regions,"Endemic in some regions, especially in dense forests","Sporadic, depending on outbreak control success"
+Biological Aspect,Response to Infection,Challenges in containment due to mobility,Immediate culling and containment
+Biological Aspect,Challenges in Containment,Difficult due to mobility,Requires rapid containment
+Epidemiological Aspect,Outbreak Patterns,Seasonal,Seasonal outbreaks
+Epidemiological Aspect,Risk Factors,"Wildlife interaction, human activities","Farming intensity, trade movement"
+Epidemiological Aspect,Spread Mechanism,"Direct contact, contaminated food","Animal transport, contaminated feed"
+Epidemiological Aspect,Environmental Influence,Environmental persistence of virus,Limited persistence
+Epidemiological Aspect,Host Factors,Genetic susceptibility,Genetic resistance in some breeds
+Epidemiological Aspect,Preventive Measures,"Wildlife surveillance, habitat management","Strict biosecurity, vaccination research"

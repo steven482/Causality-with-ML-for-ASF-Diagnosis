@@ -1,0 +1,10 @@
+Year,Outbreaks,Mortality_Rate (%),Seasonal_Peak,Risk_Factor
+2015,50,95,Summer,Trade
+2016,75,96,Summer,Trade
+2017,120,97,Autumn,Wildlife
+2018,200,98,Autumn,Wildlife
+2019,350,98,Winter,Climate
+2020,500,99,Winter,Climate
+2021,420,99,Spring,Farming
+2022,380,99,Spring,Farming
+2023,310,99,Summer,Trade

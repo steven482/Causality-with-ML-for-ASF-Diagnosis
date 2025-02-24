@@ -1,0 +1,11 @@
+Symptom,Wild_Boar_Severity,Domestic_Pig_Severity,Virus_Load
+Fever,4,5,90
+Loss of Appetite,3,4,85
+Lethargy,4,5,88
+Skin Lesions,3,4,80
+Respiratory Problems,2,3,75
+Digestive Symptoms,3,4,82
+Hemorrhages,5,5,95
+Nervous Symptoms,4,5,92
+Cyanosis,4,5,90
+Mortality Rate,5,5,98

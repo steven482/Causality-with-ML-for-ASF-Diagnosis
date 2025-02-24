@@ -1,0 +1,27 @@
+,Category,Aspect,Wild Boar,Domestic Pigs
+0,Clinical Aspect,Incubation Period,0,0
+1,Clinical Aspect,Fever,11,10
+2,Clinical Aspect,Appetite,15,13
+3,Clinical Aspect,Lethargy,21,22
+4,Clinical Aspect,Skin Lesions,20,19
+5,Clinical Aspect,Respiratory Problems,4,4
+6,Clinical Aspect,Digestive Symptoms,3,3
+7,Clinical Aspect,Hemorrhages,9,6
+8,Clinical Aspect,Mortality rate,17,15
+9,Clinical Aspect,Nervous Symptoms,24,24
+10,Clinical Aspect,Cyanosis,1,2
+11,Clinical Aspect,Joint Swelling,18,16
+12,Clinical Aspect,Subacute/Chronic Infections,19,18
+13,Biological Aspect,Susceptibility,10,7
+14,Biological Aspect,Transmission,7,5
+15,Biological Aspect,Clinical Signs,13,9
+16,Biological Aspect,Mortality Rate,17,15
+17,Biological Aspect,Role in Epidemiology,22,14
+18,Biological Aspect,Persistence of the Virus,14,12
+19,Biological Aspect,Control Measures,12,1
+20,Biological Aspect,Control Challenges,6,17
+21,Biological Aspect,Surveillance Methods,23,20
+22,Biological Aspect,Impact of Human Activities,16,8
+23,Biological Aspect,Endemic Regions,8,23
+24,Biological Aspect,Response to Infection,2,11
+25,Biological Aspect,Challenges in Containment,5,21
