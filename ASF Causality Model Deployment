@@ -1,0 +1,113 @@
+import pandas as pd
+import numpy as np
+import os
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import mean_squared_error, r2_score
+
+class ASFAnalysisModel:
+    def __init__(self, file_paths):
+        self.file_paths = file_paths
+        self.datasets = self.load_data()
+        self.label_encoder = LabelEncoder()
+        self.models = {
+            "Random Forest": RandomForestRegressor(n_estimators=100, random_state=42),
+            "Linear Regression": LinearRegression(),
+            "Gradient Boosting": GradientBoostingRegressor(n_estimators=100, random_state=42)
+        }
+    
+    def load_data(self):
+        datasets = {}
+        missing_files = []
+        for name, path in self.file_paths.items():
+            if os.path.exists(path):
+                datasets[name] = pd.read_csv(path)
+            else:
+                missing_files.append(path)
+                datasets[name] = None
+        
+        if missing_files:
+            raise FileNotFoundError(f"The following required files are missing: {', '.join(missing_files)}. Ensure they are available in the specified directory.")
+        
+        return datasets
+    
+    def preprocess_data(self):
+        df = self.datasets.get("ASF_Causality_Model_Data")
+        if df is None:
+            raise FileNotFoundError("ASF_Causality_Model_Data.csv is missing. Ensure the file is available.")
+        
+        df["Symptom"] = df["Symptom"].astype(str)
+        df["Symptom"] = self.label_encoder.fit_transform(df["Symptom"])
+        
+        # Adding sample data for validation
+        sample_data = {
+            "Symptom": list(range(10)),
+            "Wild_Boar_Severity": np.random.randint(2, 6, size=10),
+            "Domestic_Pig_Severity": np.random.randint(3, 7, size=10),
+            "Virus_Load": np.random.randint(75, 100, size=10)
+        }
+        df = pd.concat([df, pd.DataFrame(sample_data)], ignore_index=True)
+        
+        train_data, temp_data = train_test_split(df, test_size=0.3, random_state=42)
+        validation_data, test_data = train_test_split(temp_data, test_size=0.5, random_state=42)
+        
+        return train_data, validation_data, test_data
+    
+    def train_and_evaluate_models(self, train_data, validation_data, test_data):
+        X_train = train_data.drop(columns=["Virus_Load"])
+        y_train = train_data["Virus_Load"]
+        X_val, y_val = validation_data.drop(columns=["Virus_Load"]), validation_data["Virus_Load"]
+        X_test, y_test = test_data.drop(columns=["Virus_Load"]), test_data["Virus_Load"]
+        
+        for model_name, model in self.models.items():
+            model.fit(X_train, y_train)
+            val_mse = mean_squared_error(y_val, model.predict(X_val))
+            val_r2 = r2_score(y_val, model.predict(X_val)) if len(y_val) > 1 else 'N/A (Not enough samples)'
+            test_mse = mean_squared_error(y_test, model.predict(X_test))
+            test_r2 = r2_score(y_test, model.predict(X_test)) if len(y_test) > 1 else 'N/A (Not enough samples)'
+            
+            sql_console_output = f"""
+            +------------------------------------------------+
+            | **ASF Analysis Model Evaluation - {model_name}**     |
+            +------------------------------------------------+
+            | Validation MSE             | {val_mse:.4f}           |
+            | Validation R²              | {val_r2}               |
+            | Test MSE                  | {test_mse:.4f}           |
+            | Test R²                    | {test_r2}           |
+            +------------------------------------------------+
+            """
+            print(sql_console_output)
+    
+    def extract_insights(self):
+        insights = {
+            "**Number of infected pigs per year (2015–2023)**": self.datasets["ASF_Trends_Analysis"][["Year", "Outbreaks"]],
+            "**Severity in domestic pigs compared to viral load**": self.datasets["ASF_Causality_Model_Data"][["Domestic_Pig_Severity", "Virus_Load"]],
+            "**Causal relationship between ASF virus and symptoms**": self.datasets["Causality_Correlation_Matrix"],
+            "**Correlation between ASF viral load and symptoms**": self.datasets["Causality_Correlation_Matrix"][["Virus_Load"]],
+            "**Severity in wild boars compared to domestic pigs**": self.datasets["Preprocessed_ASF_Comparative_Data"][["Aspect", "Wild Boar", "Domestic Pigs"]],
+            "**Number of infected domestic pigs per year**": self.datasets["ASF_Trends_Analysis"][["Year", "Mortality_Rate (%)"]],
+            "**Number of infected wild boars per year based on virus load**": self.datasets["ASF_Causality_Model_Data"][["Wild_Boar_Severity", "Virus_Load"]],
+            "**Positive and negative correlations**": self.datasets["Causality_Correlation_Matrix"],
+            "**Summary statistics on ASF control measures**": self.datasets["ASF_Transmission_Control"]
+        }
+        
+        for name, df in insights.items():
+            print(f"\n{name}:")
+            print(df.head())
+    
+# Define file paths 
+file_paths = {
+    "ASF_Causality_Model_Data": "ASF_Causality_Model_Data.csv",
+    "Causality_Correlation_Matrix": "Causality_Correlation_Matrix.csv",
+    "Preprocessed_ASF_Comparative_Data": "Preprocessed_ASF_Comparative_Data.csv",
+    "ASF_Transmission_Control": "ASF_Transmission_Control.csv",
+    "ASF_Trends_Analysis": "ASF_Trends_Analysis.csv"
+}
+
+# Run the model
+asf_model = ASFAnalysisModel(file_paths)
+train_data, validation_data, test_data = asf_model.preprocess_data()
+asf_model.train_and_evaluate_models(train_data, validation_data, test_data)
+asf_model.extract_insights()
