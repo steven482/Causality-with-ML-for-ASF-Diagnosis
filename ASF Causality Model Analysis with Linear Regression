@@ -1,0 +1,67 @@
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import networkx as nx
+from sklearn.linear_model import LinearRegression
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import mean_absolute_error, r2_score
+
+#  STEP 1: Create a structured dataset for causality analysis
+causality_data = {
+    "Symptom": [
+        "Fever", "Loss of Appetite", "Lethargy", "Skin Lesions", "Respiratory Problems",
+        "Digestive Symptoms", "Hemorrhages", "Nervous Symptoms", "Cyanosis", "Mortality Rate"
+    ],
+    "Wild_Boar_Severity": [4, 3, 4, 3, 2, 3, 5, 4, 4, 5],  # Severity score from 1-5
+    "Domestic_Pig_Severity": [5, 4, 5, 4, 3, 4, 5, 5, 5, 5],  # Severity score from 1-5
+    "Virus_Load": [90, 85, 88, 80, 75, 82, 95, 92, 90, 98],  # Virus concentration level (%)
+}
+
+#  STEP 2: Convert to DataFrame
+df_causality = pd.DataFrame(causality_data)
+
+# Display the causality dataset (excluding the "Symptom" column for model training)
+print("Causality Model Data:\n", df_causality)
+
+#  STEP 3: Define features (X) and target variable (y)
+# Exclude "Symptom" because it is categorical and not needed for regression
+X_causality = df_causality.drop(columns=["Symptom", "Virus_Load"])
+y_causality = df_causality["Virus_Load"]
+
+#  STEP 4: Train a linear regression model to determine causal relationships
+model_causality = LinearRegression()
+model_causality.fit(X_causality, y_causality)
+
+#  STEP 5: Predict virus load based on severity of symptoms
+y_pred_causality = model_causality.predict(X_causality)
+
+#  STEP 6: Evaluate model performance
+mae = mean_absolute_error(y_causality, y_pred_causality)
+r2 = r2_score(y_causality, y_pred_causality)
+accuracy = round(r2 * 100, 2)  # Convert R² to percentage accuracy
+
+print("\n Model Performance Metrics:")
+print(f"Linear Regression - MAE: {mae:.2f}, R² Score: {r2:.3f} ({accuracy}% accuracy)")
+
+#  STEP 7: Compute correlation between symptoms and virus load
+correlation_causality = df_causality.drop(columns=["Symptom"]).corr()
+
+#  STEP 8: Display correlation matrix using Seaborn heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_causality, annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
+plt.title("Correlation Between ASF Virus Load and Symptoms")
+plt.show()
+
+#  STEP 9: Create a causal graph using NetworkX
+G = nx.DiGraph()
+for index, row in df_causality.iterrows():
+    G.add_edge("ASF Virus", row["Symptom"], weight=row["Virus_Load"])
+
+#  STEP 10: Draw the causal graph
+plt.figure(figsize=(10, 6))
+pos = nx.spring_layout(G, seed=42)
+nx.draw(G, pos, with_labels=True, node_color="lightblue", edge_color="gray", node_size=3000, font_size=10)
+plt.title("Causal Relationship Between ASF Virus and Symptoms")
+plt.show()
