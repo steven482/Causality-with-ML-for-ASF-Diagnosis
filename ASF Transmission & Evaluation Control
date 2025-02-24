@@ -1,0 +1,56 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
+
+# Creating a structured dataset for transmission and control evaluation
+transmission_control_data = {
+    "Year": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "Biosecurity_Effectiveness (%)": [60, 65, 70, 75, 80, 85, 87, 88, 90],  # Effectiveness in %
+    "Culling_Effectiveness (%)": [50, 55, 60, 65, 70, 75, 78, 80, 82],  # Effectiveness in %
+    "Surveillance_Effectiveness (%)": [55, 60, 65, 70, 75, 80, 83, 85, 87],  # Effectiveness in %
+    "Transmission_Rate": [0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5],  # Rate of disease spread per year
+}
+
+# Convert to DataFrame
+df_transmission_control = pd.DataFrame(transmission_control_data)
+
+# Save dataset as CSV file in a Windows-compatible location
+csv_transmission_control_filename = "ASF_Transmission_Control.csv"
+df_transmission_control.to_csv(csv_transmission_control_filename, index=False)
+
+# Display DataFrame to verify structure
+print("ASF Transmission and Control Dataset:")
+print(df_transmission_control.head())
+
+# Define features (X) and target variable (y) for machine learning
+X_control = df_transmission_control[["Biosecurity_Effectiveness (%)", "Culling_Effectiveness (%)", "Surveillance_Effectiveness (%)"]]
+y_control = df_transmission_control["Transmission_Rate"]
+
+# Split dataset into training and testing sets
+X_train_control, X_test_control, y_train_control, y_test_control = train_test_split(X_control, y_control, test_size=0.2, random_state=42)
+
+# Train a Random Forest model to predict ASF transmission rate
+model_control = RandomForestRegressor(n_estimators=100, random_state=42)
+model_control.fit(X_train_control, y_train_control)
+
+# Make predictions
+y_pred_control = model_control.predict(X_test_control)
+
+# Evaluate model performance
+mae_control = mean_absolute_error(y_test_control, y_pred_control)
+r2_control = r2_score(y_test_control, y_pred_control)
+
+# Print performance metrics
+print("\nModel Performance Metrics:")
+print(f"Mean Absolute Error (MAE): {mae_control:.4f}")
+print(f"R² Score: {r2_control:.4f}")
+
+# Visualizing the correlation between ASF control measures and transmission rate
+plt.figure(figsize=(10, 5))
+sns.heatmap(df_transmission_control.corr(), annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
+plt.title("Correlation Between ASF Control Measures and Transmission Rate")
+plt.show()
